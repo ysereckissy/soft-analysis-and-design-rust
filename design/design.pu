@@ -1,0 +1,34 @@
+@startuml
+class Guitar {
+   serial_number: String 
+   price: double
+   builder: String
+   model: String
+   back_wood: String
+   top_wood: String
+
+   +get_serial_number(): String
+   +get_price(): double
+   +set_price(double)
+   +get_builder(): String
+   +get_model(): String
+   +get_type(): String
+   +get_back_wood(): String
+   +get_top_wood(): String
+}
+
+class Inventory {
+    guitars: List
+
+    +add_guitar(serial: String, price: double, builder: String, model: String, type: String, back_wood: String, top_wood: String)
+    +get_guitar(serial: String): Guitar
+    +search(guitar: Guitar): Guitar
+}
+
+class Tester
+
+
+Inventory o--> Guitar
+Tester ..> Inventory : <<uses>>
+Tester ..> Guitar : <<uses>>
+@enduml

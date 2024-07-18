@@ -56,4 +56,8 @@ impl Guitar {
     pub fn get_price(&self) -> f64 {
         self.price
     }
+
+    pub fn set_price(&mut self, price: f64) {
+        self.price = price;
+    }
 }
