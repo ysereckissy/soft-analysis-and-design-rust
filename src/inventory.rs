@@ -1,3 +1,5 @@
+use crate::guitar::{Builder, GuitarType, Wood};
+
 use super::Guitar;
 
 pub struct Inventory {
@@ -13,11 +15,11 @@ impl Inventory {
         &mut self,
         serial_number: String,
         price: f64,
-        builder: String,
+        builder: Builder,
         model: String,
-        guitar_type: String,
-        back_wood: String,
-        top_wood: String,
+        guitar_type: GuitarType,
+        back_wood: Wood,
+        top_wood: Wood,
     ) {
         self.guitars.push(Guitar::new(
             serial_number,
@@ -39,35 +41,29 @@ impl Inventory {
         return None;
     }
 
-    pub fn search(&self, searched_guitar: &Guitar) -> Option<&Guitar> {
+    pub fn search(&self, searched_guitar: &Guitar) -> Vec<&Guitar> {
+        let mut guitars = Vec::new();
+
         for guitar in &self.guitars {
-            if (guitar.get_builder() != String::from(""))
-                && (guitar.get_builder() != searched_guitar.get_builder())
-            {
+            if guitar.get_builder() != searched_guitar.get_builder() {
                 continue;
             }
             if (guitar.get_model() != String::from(""))
-                && (guitar.get_model() != searched_guitar.get_model())
+                && (guitar.get_model().to_lowercase() != searched_guitar.get_model().to_lowercase())
             {
                 continue;
             }
-            if (guitar.get_type() != String::from(""))
-                && (guitar.get_type() != searched_guitar.get_type())
-            {
+            if guitar.get_type() != searched_guitar.get_type() {
                 continue;
             }
-            if (guitar.get_back_wood() != String::from(""))
-                && (guitar.get_back_wood() != searched_guitar.get_back_wood())
-            {
+            if guitar.get_back_wood() != searched_guitar.get_back_wood() {
                 continue;
             }
-            if (guitar.get_top_wood() != String::from(""))
-                && (guitar.get_top_wood() != searched_guitar.get_top_wood())
-            {
+            if guitar.get_top_wood() != searched_guitar.get_top_wood() {
                 continue;
             }
-            return Some(guitar);
+            guitars.push(guitar);
         }
-        return None;
+        return guitars;
     }
 }

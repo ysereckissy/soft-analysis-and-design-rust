@@ -1,34 +1,50 @@
 @startuml
+enum GuitarType {
+    +fmt(f: &mut std::fmt::Formater<'_>): std::fmt::Result
+}
+enum Builder {
+    +fmt(f: &mut std::fmt::Formater<'_>): std::fmt::Result
+}
+enum Wood {
+    +fmt(f: &mut std::fmt::Formater<'_>): std::fmt::Result
+}
 class Guitar {
    serial_number: String 
    price: double
-   builder: String
+   builder: Builder
    model: String
-   back_wood: String
-   top_wood: String
+   guitar_type: GuitarType
+   back_wood: Wood
+   top_wood: Wood
 
    +get_serial_number(): String
    +get_price(): double
    +set_price(double)
-   +get_builder(): String
+   +get_builder(): Builder
    +get_model(): String
-   +get_type(): String
-   +get_back_wood(): String
-   +get_top_wood(): String
+   +get_type(): GuitarType
+   +get_back_wood(): Wood
+   +get_top_wood(): Wood
 }
 
 class Inventory {
     guitars: List
 
-    +add_guitar(serial: String, price: double, builder: String, model: String, type: String, back_wood: String, top_wood: String)
+    +add_guitar(serial: String, price: double, builder: Builder, model: String, type: GuitarType, back_wood: Wood, top_wood: Wood)
     +get_guitar(serial: String): Guitar
-    +search(guitar: Guitar): Guitar
+    +search(guitar: Guitar): List<Guitar>
 }
 
 class Tester
 
 
-Inventory o--> Guitar
+Inventory *--> Guitar
+Guitar *--> GuitarType
+Guitar *--> Builder
+Guitar *--> Wood
+Inventory ..> GuitarType
+Inventory ..> Builder
+Inventory ..> Wood
 Tester ..> Inventory : <<uses>>
 Tester ..> Guitar : <<uses>>
 @enduml
